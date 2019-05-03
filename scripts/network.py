@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import tensorflow as tf
 
 class Network:
@@ -7,19 +8,25 @@ class Network:
         
     def build(self):
         model = tf.keras.Sequential()
-
         # Must define the input shape in the first layer of the neural network
         model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=2, padding='same', activation='relu', input_shape=(28,28,1))) 
+        #model.add(tf.keras.layers.BatchNormalization())
+
         model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
         model.add(tf.keras.layers.Dropout(0.3))
 
         model.add(tf.keras.layers.Conv2D(filters=32, kernel_size=2, padding='same', activation='relu'))
+       # model.add(tf.keras.layers.BatchNormalization())
+
         model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
         model.add(tf.keras.layers.Dropout(0.3))
 
         model.add(tf.keras.layers.Flatten())
         model.add(tf.keras.layers.Dense(256, activation='relu'))
+
+
         model.add(tf.keras.layers.Dropout(0.5))
+        #model.add(tf.keras.layers.BatchNormalization())
         model.add(tf.keras.layers.Dense(10, activation='softmax'))
 
         # Take a look at the model summary
@@ -29,7 +36,7 @@ class Network:
     
     
     def train(self, x_train, y_train, x_valid, y_valid, batchSize, epochs):
-        self.model.fit(x_train, y_train, batch_size=batchSize, epochs=epochs, validation_data=(x_valid, y_valid))
+        return self.model.fit(x_train, y_train, batch_size=batchSize, epochs=epochs, validation_data=(x_valid, y_valid)).history
         
     def test(self, x_test, y_test):
         # Evaluate the model on test set
