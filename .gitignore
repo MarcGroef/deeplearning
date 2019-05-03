@@ -1,4 +1,5 @@
 *.gz
 *.pyc
 *.png
-
+*.npy
+*.csv

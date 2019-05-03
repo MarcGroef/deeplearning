@@ -3,20 +3,25 @@ import tensorflow as tf
 
 class Network:
     
-    def __init__(self):
+    def __init__(self, experimentType):
+        self.validExperimentTypes = ['control', 'batchnorm']
+        assert(experimentType in self.validExperimentTypes), ("Invalid experiment type.. Please choose from:\n" + str(self.validExperimentTypes))
+        self.experimentType = experimentType
         self.build()
         
     def build(self):
         model = tf.keras.Sequential()
         # Must define the input shape in the first layer of the neural network
         model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=2, padding='same', activation='relu', input_shape=(28,28,1))) 
-        #model.add(tf.keras.layers.BatchNormalization())
+        if self.experimentType == "batchnorm":
+            model.add(tf.keras.layers.BatchNormalization())
 
         model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
         model.add(tf.keras.layers.Dropout(0.3))
 
         model.add(tf.keras.layers.Conv2D(filters=32, kernel_size=2, padding='same', activation='relu'))
-       # model.add(tf.keras.layers.BatchNormalization())
+        if self.experimentType == "batchnorm":
+            model.add(tf.keras.layers.BatchNormalization())
 
         model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
         model.add(tf.keras.layers.Dropout(0.3))
@@ -26,7 +31,8 @@ class Network:
 
 
         model.add(tf.keras.layers.Dropout(0.5))
-        #model.add(tf.keras.layers.BatchNormalization())
+        if self.experimentType == "batchnorm":
+            model.add(tf.keras.layers.BatchNormalization())
         model.add(tf.keras.layers.Dense(10, activation='softmax'))
 
         # Take a look at the model summary
@@ -45,4 +51,4 @@ class Network:
         print('\n', 'Test accuracy:', score[1])
         
 if __name__ == "__main__":
-    net = Network()
+    net = Network('batchnorm')
