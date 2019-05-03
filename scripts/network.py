@@ -1,3 +1,5 @@
+import tensorflow as tf
+
 class Network:
     
     def __init__(self):
@@ -27,10 +29,13 @@ class Network:
     
     
     def train(self, x_train, y_train, x_valid, y_valid, batchSize, epochs):
-        self.model.fit(x_train, y_train, batch_size=batchSize, epochs=epochs, validation_data=(x_valid, y_valid), callbacks=[checkpointer])
+        self.model.fit(x_train, y_train, batch_size=batchSize, epochs=epochs, validation_data=(x_valid, y_valid))
         
     def test(self, x_test, y_test):
         # Evaluate the model on test set
         score = model.evaluate(x_test, y_test, verbose=0)
         # Print test accuracy
         print('\n', 'Test accuracy:', score[1])
+        
+if __name__ == "__main__":
+    net = Network()
