@@ -4,8 +4,8 @@ from trainer import Trainer
 
 class Experiment:
     def __init__(self):
-        self.experimentsToDo = ['control', 'batchnorm']
-        self.nExperiments = 2
+        self.experimentsToDo = ['control', 'batchnorm', 'dropout', 'l1', 'l2']
+        self.nExperiments = 1
         self.results = {}
         
         

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 class Trainer():
     def __init__(self, experimentType):
-        self.validExperimentTypes = ['control', 'batchnorm']
+        self.validExperimentTypes = ['control', 'batchnorm', 'dropout', 'l2', 'l1']
         assert(experimentType in self.validExperimentTypes), ("Invalid experiment type.. Please choose from:\n" + str(self.validExperimentTypes))
         self.experimentType = experimentType
         
@@ -15,7 +15,7 @@ class Trainer():
         self.data = Dataset()
         
     def train(self):
-        history = self.net.train(self.data.trainImages, self.data.trainLabels, self.data.trainImages, self.data.trainLabels, 200, 10)
+        history = self.net.train(self.data.trainImages, self.data.trainLabels, self.data.testImages, self.data.testLabels, 200, 10)
         self.val_acc = history['val_acc']
         self.val_loss = history['val_loss']
         self.train_acc = history['acc']
@@ -39,7 +39,6 @@ class Trainer():
         #plt.show()
         
     def setExperimentType(self, experimentType):
-        self.validExperimentTypes = ['control', 'batchnorm']
         assert(experimentType in self.validExperimentTypes), ("Invalid experiment type.. Please choose from:\n" + str(self.validExperimentTypes))
         self.experimentType = experimentType
         
