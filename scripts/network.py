@@ -12,7 +12,7 @@ class Network:
     def build(self):
         regularizer = None
         if self.experimentType == 'l2':
-            regularizer = tf.keras.regularizers.l2(0.01)
+            regularizer = tf.keras.regularizers.l2(0.001)
         elif self.experimentType == 'l1':
             regularizer = tf.keras.regularizers.l1(0.01)
             
@@ -23,21 +23,22 @@ class Network:
             model.add(tf.keras.layers.BatchNormalization())
 
         model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
-        model.add(tf.keras.layers.Dropout(0.3))
+
 
         model.add(tf.keras.layers.Conv2D(filters=32, kernel_size=2, padding='same', activation='relu', kernel_regularizer=regularizer))
         if self.experimentType == "batchnorm":
             model.add(tf.keras.layers.BatchNormalization())
 
         model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
-        if self.experimentType == 'dropout'
-        model.add(tf.keras.layers.Dropout(0.3))
+        if self.experimentType == 'dropout':
+            model.add(tf.keras.layers.Dropout(0.5))
 
         model.add(tf.keras.layers.Flatten())
         model.add(tf.keras.layers.Dense(256, activation='relu', kernel_regularizer=regularizer))
 
+        if self.experimentType == 'dropout':
 
-        model.add(tf.keras.layers.Dropout(0.5))
+            model.add(tf.keras.layers.Dropout(0.5))
         if self.experimentType == "batchnorm":
             model.add(tf.keras.layers.BatchNormalization())
         model.add(tf.keras.layers.Dense(10, activation='softmax', kernel_regularizer=regularizer))

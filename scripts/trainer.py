@@ -15,7 +15,7 @@ class Trainer():
         self.data = Dataset()
         
     def train(self):
-        history = self.net.train(self.data.trainImages, self.data.trainLabels, self.data.testImages, self.data.testLabels, 200, 10)
+        history = self.net.train(self.data.trainImages, self.data.trainLabels, self.data.testImages, self.data.testLabels, 200, 20)
         self.val_acc = history['val_acc']
         self.val_loss = history['val_loss']
         self.train_acc = history['acc']
