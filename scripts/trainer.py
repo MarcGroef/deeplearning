@@ -3,6 +3,7 @@ from network import Network
 from dataset import Dataset
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 
 class Trainer():
@@ -13,13 +14,10 @@ class Trainer():
 
         self.net = Network(experimentType)
         self.data = Dataset(10, exp_idx)
+        self.save_loc = '../data/'
 
     def train(self):
-<<<<<<< HEAD
-        history = self.net.train(self.data.trainImages, self.data.trainLabels, self.data.testImages, self.data.testLabels, 200, 20)
-=======
-        history = self.net.train(self.data.trainImages(), self.data.trainLabels(), self.data.valImages(), self.data.valLabels(), 200, 10)
->>>>>>> 172a6af21eb7856cadb7c8f680b4f0e3ddfdd551
+        history = self.net.train(self.data.trainImages(), self.data.trainLabels(), self.data.valImages(), self.data.valLabels(), 400, epochs=2)
         self.val_acc = history['val_acc']
         self.val_loss = history['val_loss']
         self.train_acc = history['acc']
@@ -27,10 +25,13 @@ class Trainer():
         return (self.train_acc, self.train_loss, self.val_acc, self.val_loss)
 
     def storeStats(self, experimentIdx):
-        np.save("../data/" + self.experimentType + "_train_acc_" + str(experimentIdx), self.train_acc)
-        np.save("../data/" + self.experimentType + "_train_loss_" + str(experimentIdx), self.train_loss)
-        np.save("../data/" + self.experimentType + "_val_acc_" + str(experimentIdx), self.val_acc)
-        np.save("../data/" + self.experimentType + "_val_loss_" + str(experimentIdx), self.val_loss)
+        if not os.path.exists(self.save_loc):
+            os.makedirs(self.save_loc)
+
+        np.save(self.save_loc + self.experimentType + "_train_acc_" + str(experimentIdx), self.train_acc)
+        np.save(self.save_loc + self.experimentType + "_train_loss_" + str(experimentIdx), self.train_loss)
+        np.save(self.save_loc + self.experimentType + "_val_acc_" + str(experimentIdx), self.val_acc)
+        np.save(self.save_loc + self.experimentType + "_val_loss_" + str(experimentIdx), self.val_loss)
 
     def printStats(self):
         fig, ax = plt.subplots()

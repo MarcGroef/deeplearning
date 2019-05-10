@@ -53,17 +53,5 @@ class Dataset(object):
         self.testImages = lambda : convert_to_tf(self._testImages)
         self.testLabels = lambda : tf.keras.utils.to_categorical(self._testLabels)
 
-
-        # # Normalization
-        # self.trainImages = self.trainImages.astype('float32') / 255
-        # self.trainImages = np.expand_dims(self.trainImages, axis = -1)
-        #
-        # self.testImages = self.testImages.astype('float32') / 255
-        # self.testImages = np.expand_dims(self.testImages, axis = -1)
-        #
-        # # to one-hot
-        # self.testLabels = tf.keras.utils.to_categorical(self.testLabels)
-        # self.trainLabels = tf.keras.utils.to_categorical(self.trainLabels)
-
 if __name__ == "__main__":
     dataset = Dataset();
