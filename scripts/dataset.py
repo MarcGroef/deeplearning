@@ -3,7 +3,7 @@ import tensorflow as tf
 from sklearn.model_selection import StratifiedKFold
 
 # Set dataset seed
-np.random.seed()
+np.random.seed(seed=842102)
 
 class SingletonDecorator:
     def __init__(self,klass):
