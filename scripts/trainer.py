@@ -17,7 +17,7 @@ class Trainer():
         self.save_loc = '../data/'
 
     def train(self):
-        history = self.net.train(self.data.trainImages(), self.data.trainLabels(), self.data.valImages(), self.data.valLabels(), 400, epochs=2)
+        history = self.net.train(self.data.trainImages(), self.data.trainLabels(), self.data.valImages(), self.data.valLabels(), 256, epochs=30)
         self.val_acc = history['val_acc']
         self.val_loss = history['val_loss']
         self.train_acc = history['acc']
