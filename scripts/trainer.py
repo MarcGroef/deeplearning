@@ -31,11 +31,12 @@ class Trainer():
 
         # Tag parameters being tested
         tag = "".join([param + '=' + str(self.kwargs[param]) for param in PARAMETER_EXPERIMENTS if param in self.kwargs])
+        tag = '_' + tag if tag != "" else ""
 
-        np.save(self.save_loc + self.experimentType + '_' + tag + "_train_acc_" + str(experimentIdx), self.train_acc)
-        np.save(self.save_loc + self.experimentType + '_' + tag + "_train_loss_" + str(experimentIdx), self.train_loss)
-        np.save(self.save_loc + self.experimentType + '_' + tag + "_val_acc_" + str(experimentIdx), self.val_acc)
-        np.save(self.save_loc + self.experimentType + '_' + tag + "_val_loss_" + str(experimentIdx), self.val_loss)
+        np.save(self.save_loc + self.experimentType + tag + "_train_acc_" + str(experimentIdx), self.train_acc)
+        np.save(self.save_loc + self.experimentType + tag + "_train_loss_" + str(experimentIdx), self.train_loss)
+        np.save(self.save_loc + self.experimentType + tag + "_val_acc_" + str(experimentIdx), self.val_acc)
+        np.save(self.save_loc + self.experimentType + tag + "_val_loss_" + str(experimentIdx), self.val_loss)
 
     def printStats(self):
         fig, ax = plt.subplots()
