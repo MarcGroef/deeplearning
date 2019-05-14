@@ -14,7 +14,7 @@ class Network:
         l_scalars = 0.001
         self.l1_scalar = kwargs['l1_scalar'] if 'l1_scalar' in kwargs else l_scalars
         self.l2_scalar = kwargs['l2_scalar'] if 'l2_scalar' in kwargs else l_scalars
-        self.fc_dropout_rate = kwargs['dropout_rate'] if 'dropout_rate' in kwargs else .5
+        self.fc_dropout_rate = kwargs['fc_dropout_rate'] if 'fc_dropout_rate' in kwargs else .5
 
         print(kwargs)
         self.build()
