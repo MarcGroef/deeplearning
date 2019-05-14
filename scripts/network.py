@@ -1,20 +1,28 @@
 #!/usr/bin/python
 import tensorflow as tf
 
+PARAMETER_EXPERIMENTS = ['l1_scalar', 'l2_scalar']#e.g. dropout rate
+
 class Network:
 
-    def __init__(self, experimentType):
+    def __init__(self, experimentType, **kwargs):
         self.validExperimentTypes = ['control', 'batchnorm', 'dropout', 'l2', 'l1']
         assert(experimentType in self.validExperimentTypes), ("Invalid experiment type.. Please choose from:\n" + str(self.validExperimentTypes))
         self.experimentType = experimentType
+
+        l_scalars = 0.001
+        self.l1_scalar = kwargs['l1_scalar'] if 'l1_scalar' in kwargs else l_scalars
+        self.l2_scalar = kwargs['l2_scalar'] if 'l2_scalar' in kwargs else l_scalars
+        print('self.l2_scalar=', self.l2_scalar)
+
         self.build()
 
     def build(self):
         regularizer = None
         if self.experimentType == 'l2':
-            regularizer = tf.keras.regularizers.l2(0.001)
+            regularizer = tf.keras.regularizers.l2(self.l2_scalar)
         elif self.experimentType == 'l1':
-            regularizer = tf.keras.regularizers.l1(0.01)
+            regularizer = tf.keras.regularizers.l1(self.l1_scalar)
 
         model = tf.keras.Sequential()
         # Must define the input shape in the first layer of the neural network
@@ -47,7 +55,7 @@ class Network:
             tf.keras.layers.Dropout(0.5)
 
         # Take a look at the model summary
-        model.summary()
+        # model.summary()
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         self.model = model
 

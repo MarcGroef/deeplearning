@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from network import Network
+from network import Network, PARAMETER_EXPERIMENTS
 from dataset import Dataset
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,12 +7,13 @@ import os
 
 
 class Trainer():
-    def __init__(self, experimentType, exp_idx):
+    def __init__(self, experimentType, exp_idx, **kwargs):
         self.validExperimentTypes = ['control', 'batchnorm', 'dropout', 'l2', 'l1']
         assert(experimentType in self.validExperimentTypes), ("Invalid experiment type.. Please choose from:\n" + str(self.validExperimentTypes))
         self.experimentType = experimentType
 
-        self.net = Network(experimentType)
+        self.kwargs = kwargs
+        self.net = Network(experimentType, **kwargs)
         self.data = Dataset(10, exp_idx)
         self.save_loc = '../data/'
 
@@ -28,10 +29,13 @@ class Trainer():
         if not os.path.exists(self.save_loc):
             os.makedirs(self.save_loc)
 
-        np.save(self.save_loc + self.experimentType + "_train_acc_" + str(experimentIdx), self.train_acc)
-        np.save(self.save_loc + self.experimentType + "_train_loss_" + str(experimentIdx), self.train_loss)
-        np.save(self.save_loc + self.experimentType + "_val_acc_" + str(experimentIdx), self.val_acc)
-        np.save(self.save_loc + self.experimentType + "_val_loss_" + str(experimentIdx), self.val_loss)
+        # Tag parameters being tested
+        tag = "".join([param + '=' + str(self.kwargs[param]) for param in PARAMETER_EXPERIMENTS if param in self.kwargs])
+
+        np.save(self.save_loc + self.experimentType + '_' + tag + "_train_acc_" + str(experimentIdx), self.train_acc)
+        np.save(self.save_loc + self.experimentType + '_' + tag + "_train_loss_" + str(experimentIdx), self.train_loss)
+        np.save(self.save_loc + self.experimentType + '_' + tag + "_val_acc_" + str(experimentIdx), self.val_acc)
+        np.save(self.save_loc + self.experimentType + '_' + tag + "_val_loss_" + str(experimentIdx), self.val_loss)
 
     def printStats(self):
         fig, ax = plt.subplots()
