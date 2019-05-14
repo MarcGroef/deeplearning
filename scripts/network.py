@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import tensorflow as tf
-from tf.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization, Dropout
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization, Dropout
 
 PARAMETER_EXPERIMENTS = ['l1_scalar', 'l2_scalar', 'fc_dropout_rate']#e.g. dropout rate
 

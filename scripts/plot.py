@@ -48,14 +48,14 @@ def control():
 
     return np.average(train_acc), np.average(val_acc)
 
-def plot_parameter(param_values, name='l2', title='Accuracy after 25 epochs'):
+def plot_parameter(param_values, name='dropout', title='Accuracy after 25 epochs'):
     n_experiments = 5
 
     train_acc, val_acc = [], []
     for param in param_values:
         # Get final accuracies only for each fold
-        train_acc.append([np.load('../data/' + name + '_l2_scalar' + '=' + str(param) + "_train_acc_" + str(expIdx) + '.npy')[-1] for expIdx in range(n_experiments)])
-        val_acc.append([np.load('../data/' + name + '_l2_scalar' + '=' + str(param) + "_val_acc_"   + str(expIdx) + '.npy')[-1] for expIdx in range(n_experiments)])
+        train_acc.append([np.load('../data/' + name + '_fc_dropout_rate' + '=' + str(param) + "_train_acc_" + str(expIdx) + '.npy')[-1] for expIdx in range(n_experiments)])
+        val_acc.append([np.load('../data/' + name + '_fc_dropout_rate' + '=' + str(param) + "_val_acc_"   + str(expIdx) + '.npy')[-1] for expIdx in range(n_experiments)])
 
     # Find train/val averages and plot
     avg_train_acc = np.average(np.stack(train_acc), axis=1)
@@ -75,12 +75,14 @@ def plot_parameter(param_values, name='l2', title='Accuracy after 25 epochs'):
         plt.scatter(param_values, train_acc[scalar_run], color=palette[0], s=4, alpha=.5)
         plt.scatter(param_values, val_acc[scalar_run], color=palette[1], s=4, alpha=.5)
 
-    param_labels = np.array([float(p) for p in param_values])*1000
-    finish(title=title, xlabel='l2 scalar (E10-3)', xticks=[param_values, param_labels], ylim=(0.8, 1))
+    # param_labels = np.array([float(p) for p in param_values])*1000
+    finish(title=title, xlabel='dropout rate', ylim=(0.75, 1))# xticks=[param_values, param_labels]
 
 if __name__ == "__main__":
     # plot_training('control')
     # plot_training('batchnorm')
-    params = list(np.arange(0, 0.003, 0.00025))
-    params = [str(round(param, 6)) for param in params]
-    plot_parameter(params)
+    # plot_training('dropout')
+    # params = list(np.arange(0, 0.003, 0.00025))
+    # params = [str(round(param, 6)) for param in params]
+    # plot_parameter(params)
+    plot_parameter([param*.1 for param in range(10)])
