@@ -3,10 +3,11 @@ import numpy as np
 from trainer import Trainer
 
 class Experiment:
-    def __init__(self):
-        #self.experimentsToDo = ['control', 'batchnorm', 'dropout', 'l1', 'l2']
-        self.experimentsToDo = [{'exp_type' : 'control'}, {'exp_type' : 'batchnorm'}]
-        # self.experimentsToDo = [{'exp_type' : 'l2', 'l2_scalar' : param} for param in np.arange(0, 0.002, 0.0002)]
+    def __init__(self):        
+        # self.experimentsToDo = [{'exp_type' : 'control'}, {'exp_type' : 'batchnorm'}]
+        # self.experimentsToDo = [{'exp_type' : 'l2', 'l2_scalar' : param} for param in np.arange(0, 0.003, 0.00025)]
+        self.experimentsToDo = [{'exp_type' : 'l1', 'l1_scalar' : param} for param in np.arange(0, 0.003, 0.00025)]
+        self.experimentsToDo = [{'exp_type' : 'dropout', 'fc_dropout_rate' : param*.1} for param in range(10)]
 
         self.nExperiments = 5
         self.results = {}

@@ -1,7 +1,8 @@
 #!/usr/bin/python
 import tensorflow as tf
+from tf.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, BatchNormalization, Dropout
 
-PARAMETER_EXPERIMENTS = ['l1_scalar', 'l2_scalar']#e.g. dropout rate
+PARAMETER_EXPERIMENTS = ['l1_scalar', 'l2_scalar', 'fc_dropout_rate']#e.g. dropout rate
 
 class Network:
 
@@ -13,6 +14,7 @@ class Network:
         l_scalars = 0.001
         self.l1_scalar = kwargs['l1_scalar'] if 'l1_scalar' in kwargs else l_scalars
         self.l2_scalar = kwargs['l2_scalar'] if 'l2_scalar' in kwargs else l_scalars
+        self.fc_dropout_rate = kwargs['dropout_rate'] if 'dropout_rate' in kwargs else .5
 
         print(kwargs)
         self.build()
@@ -26,33 +28,28 @@ class Network:
 
         model = tf.keras.Sequential()
         # Must define the input shape in the first layer of the neural network
-        model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=2, padding='same', activation='relu', input_shape=(28,28,1), kernel_regularizer=regularizer))
+        model.add(Conv2D(filters=64, kernel_size=2, padding='same', activation='relu', input_shape=(28,28,1), kernel_regularizer=regularizer))
         if self.experimentType == "batchnorm":
-            model.add(tf.keras.layers.BatchNormalization())
+            model.add(BatchNormalization())
 
-        model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
+        model.add(MaxPooling2D(pool_size=2))
 
 
-        model.add(tf.keras.layers.Conv2D(filters=32, kernel_size=2, padding='same', activation='relu', kernel_regularizer=regularizer))
+        model.add(Conv2D(filters=32, kernel_size=2, padding='same', activation='relu', kernel_regularizer=regularizer))
         if self.experimentType == "batchnorm":
-            model.add(tf.keras.layers.BatchNormalization())
+            model.add(BatchNormalization())
 
-        model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
-        if self.experimentType == 'dropout':
-            model.add(tf.keras.layers.Dropout(0.1))
+        model.add(MaxPooling2D(pool_size=2))
 
-        model.add(tf.keras.layers.Flatten())
-        model.add(tf.keras.layers.Dense(256, activation='relu', kernel_regularizer=regularizer))
+        model.add(Flatten())
+        model.add(Dense(256, activation='relu', kernel_regularizer=regularizer))
 
         if self.experimentType == 'dropout':
 
-            model.add(tf.keras.layers.Dropout(0.5))
+            model.add(Dropout(self.fc_dropout_rate))
         if self.experimentType == "batchnorm":
-            model.add(tf.keras.layers.BatchNormalization())
-        model.add(tf.keras.layers.Dense(10, activation='softmax', kernel_regularizer=regularizer))
-
-        if self.experimentType == 'dropout':
-            tf.keras.layers.Dropout(0.5)
+            model.add(BatchNormalization())
+        model.add(Dense(10, activation='softmax', kernel_regularizer=regularizer))
 
         # Take a look at the model summary
         # model.summary()
