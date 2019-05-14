@@ -17,12 +17,12 @@ class SingletonDecorator:
 @SingletonDecorator
 class Dataset(object):
 
-    def __init__(self, n_splits, split_index):
+    def __init__(self, nSplits, split_index):
         print("DATASET: You should only see this message once.")
         (self._trainImages, self._trainLabels), (self._testImages, self._testLabels) = tf.keras.datasets.fashion_mnist.load_data()
 
         # Cross validation
-        skf = StratifiedKFold(n_splits=10)
+        skf = StratifiedKFold(n_splits=nSplits)
         indices_by_expIdx = []
         for train_index, val_index in skf.split(self._trainImages, self._trainLabels):
             indices_by_expIdx.append((train_index, val_index))

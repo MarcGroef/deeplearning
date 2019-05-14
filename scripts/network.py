@@ -13,8 +13,8 @@ class Network:
         l_scalars = 0.001
         self.l1_scalar = kwargs['l1_scalar'] if 'l1_scalar' in kwargs else l_scalars
         self.l2_scalar = kwargs['l2_scalar'] if 'l2_scalar' in kwargs else l_scalars
-        print('self.l2_scalar=', self.l2_scalar)
 
+        print(kwargs)
         self.build()
 
     def build(self):

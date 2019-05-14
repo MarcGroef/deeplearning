@@ -7,18 +7,18 @@ import os
 
 
 class Trainer():
-    def __init__(self, experimentType, exp_idx, **kwargs):
+    def __init__(self, experimentType, **kwargs):
         self.validExperimentTypes = ['control', 'batchnorm', 'dropout', 'l2', 'l1']
         assert(experimentType in self.validExperimentTypes), ("Invalid experiment type.. Please choose from:\n" + str(self.validExperimentTypes))
         self.experimentType = experimentType
 
         self.kwargs = kwargs
         self.net = Network(experimentType, **kwargs)
-        self.data = Dataset(10, exp_idx)
+        self.data = Dataset(kwargs['nExperiments'], kwargs['experiment_index'])
         self.save_loc = '../data/'
 
     def train(self):
-        history = self.net.train(self.data.trainImages(), self.data.trainLabels(), self.data.valImages(), self.data.valLabels(), 256, epochs=30)
+        history = self.net.train(self.data.trainImages(), self.data.trainLabels(), self.data.valImages(), self.data.valLabels(), 512, epochs=25)
         self.val_acc = history['val_acc']
         self.val_loss = history['val_loss']
         self.train_acc = history['acc']

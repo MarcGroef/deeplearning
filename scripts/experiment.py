@@ -5,10 +5,10 @@ from trainer import Trainer
 class Experiment:
     def __init__(self):
         #self.experimentsToDo = ['control', 'batchnorm', 'dropout', 'l1', 'l2']
-        # self.experimentsToDo = [{'experiment' : 'l2'}]
-        self.experimentsToDo = [{'exp_type' : 'l2', 'l2_scalar' : 0.01}, {'exp_type' : 'l2', 'l2_scalar' : 0.007}, {'exp_type' : 'l2', 'l2_scalar' : 0.004}, {'exp_type' : 'l2', 'l2_scalar' : 0.001}, {'exp_type' : 'l2', 'l2_scalar' : 0.0007}]
+        self.experimentsToDo = [{'exp_type' : 'control'}, {'exp_type' : 'batchnorm'}]
+        # self.experimentsToDo = [{'exp_type' : 'l2', 'l2_scalar' : param} for param in np.arange(0, 0.002, 0.0002)]
 
-        self.nExperiments = 10
+        self.nExperiments = 5
         self.results = {}
 
 
@@ -22,7 +22,9 @@ class Experiment:
             self.results[experiment]['val_loss'] = []
 
             for expIdx in range(self.nExperiments):
-                trainer = Trainer(experiment, expIdx, **exp)
+                exp['nExperiments'] = self.nExperiments
+                exp['experiment_index'] = expIdx
+                trainer = Trainer(experiment, **exp)
 
                 tr_acc, tr_loss, val_acc, val_loss = trainer.train()
                 self.results[experiment]['train_acc'].append(tr_acc)
