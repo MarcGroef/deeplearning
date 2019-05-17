@@ -4,7 +4,7 @@ from trainer import Trainer
 
 def runDropout():
     nExps = 10
-    results = np.zeros((mExps))
+    results = np.zeros((nExps))
 
     for expIdx in range(nExps):
         print "Experiment index = ", expIdx
@@ -20,7 +20,7 @@ def runDropout():
     
 def runBatchnorm():
     nExps = 10
-    results = np.zeros((mExps))
+    results = np.zeros((nExps))
 
     for expIdx in range(nExps):
         print "Experiment index = ", expIdx
@@ -35,7 +35,7 @@ def runBatchnorm():
     
 def runControl():
     nExps = 10
-    results = np.zeros((mExps))
+    results = np.zeros((nExps))
     
     for expIdx in range(nExps):
         print "Experiment index = ", expIdx
