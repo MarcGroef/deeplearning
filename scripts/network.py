@@ -62,8 +62,9 @@ class Network:
 
     def test(self, x_test, y_test):
         # Evaluate the model on test set
-        score = model.evaluate(x_test, y_test, verbose=0)
+        score = self.model.evaluate(x_test, y_test, verbose=0)
         # Print test accuracy
+        print score
         print('\n', 'Test accuracy:', score[1])
         return score[1]
 

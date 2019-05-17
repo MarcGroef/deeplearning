@@ -26,7 +26,7 @@ class Trainer():
         return (self.train_acc, self.train_loss, self.val_acc, self.val_loss)
     
     def test(self):
-        res = self.net.test(self.data.testImages, self.data.testLabels)
+        res = self.net.test(self.data.testImages(), self.data.testLabels())
         return res
 
     def storeStats(self, experimentIdx):
