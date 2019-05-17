@@ -52,7 +52,7 @@ class Network:
         model.add(Dense(10, activation='softmax', kernel_regularizer=regularizer))
 
         # Take a look at the model summary
-        # model.summary()
+        model.summary()
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         self.model = model
 
@@ -65,6 +65,7 @@ class Network:
         score = model.evaluate(x_test, y_test, verbose=0)
         # Print test accuracy
         print('\n', 'Test accuracy:', score[1])
+        return score[1]
 
 if __name__ == "__main__":
     net = Network('l1')

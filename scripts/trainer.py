@@ -24,6 +24,10 @@ class Trainer():
         self.train_acc = history['acc']
         self.train_loss = history['loss']
         return (self.train_acc, self.train_loss, self.val_acc, self.val_loss)
+    
+    def test(self):
+        res = self.net.test(self.data.testImages, self.data.testLabels)
+        return res
 
     def storeStats(self, experimentIdx):
         if not os.path.exists(self.save_loc):
